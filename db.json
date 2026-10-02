@@ -1,32 +1,28 @@
 {
-    "pacientes": [
-        {
-            "id": 1,
-            "paciente": "Ana Gómez",
-            "imc": 55,
-            "peso": 68,
-            "altura": 1.62
-        },
+    "libros": [
         {
             "id": 2,
-            "paciente": "Santiago Ruiz",
-            "imc": 58,
-            "peso": 75,
-            "altura": 1.75
+            "titulo": "Pedro Páramo",
+            "autor": "Juan Rulfo",
+            "anio": 1955,
+            "genero": "Novela",
+            "disponible": true
         },
         {
-            "id": 1,
-            "paciente": "Ana Gómez",
-            "imc": 55,
-            "peso": 68,
-            "altura": 1.62
+            "id": 3,
+            "titulo": "El laberinto de la soledad",
+            "autor": "Octavio Paz",
+            "anio": 1950,
+            "genero": "Ensayo",
+            "disponible": false
         },
         {
-            "id": 2,
-            "paciente": "Santiago Ruiz",
-            "imc": 58,
-            "peso": 75,
-            "altura": 1.75
+            "id": 4,
+            "titulo": "Como agua para chocolate",
+            "autor": "Laura Esquivel",
+            "anio": 1989,
+            "genero": "Novela",
+            "disponible": true
         }
     ]
 }

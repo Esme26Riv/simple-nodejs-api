@@ -1,13 +1,14 @@
 {
-  "name": "simple-nodejs-api",
+  "name": "api-libros",
   "version": "1.0.0",
-  "description": "Esta es mi primer api desarrollada con nodejs",
+  "description": "API de una biblioteca desarrollada con Node JS",
   "keywords": [],
   "license": "ISC",
   "author": "Esmeralda Rivera",
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "dependencies": {

@@ -1,99 +1,99 @@
 import express from 'express';
-import fs from "fs"; // Permite trabajar con file system
-import bodyParser from "body-parser";
+import fs from "fs"; 
 
 const app = express();
-app.use(bodyParser.json());
 
-// ¡Muy importante! Middleware para que Express entienda los JSON en el req.body
 app.use(express.json());
 
 const readData = () => {
     try {
         const data = fs.readFileSync("./db.json");
         return JSON.parse(data);
-    } catch (err) {
-        console.log(err); // Corregido: se usa 'err' en lugar de 'error'
+    } catch (error) {
+        console.log(error);
     }
 };
 
 const writeData = (data) => {
     try {
-        fs.writeFileSync("./db.json", JSON.stringify(data));
+        fs.writeFileSync("./db.json", JSON.stringify(data, null, 4));
     } catch (error) {
         console.log(error);
     }
 };
 
 app.get("/", (req, res) => {
-    res.send("Bienvenido a mi primer API con Node JS !!");
+    res.send("Bienvenido a mi API de la biblioteca con Node JS !!");
 });
 
-// Obtener todos los pacientes
-app.get("/pacientes", (req, res) => {
+app.get("/libros", (req, res) => {
     const data = readData();
-    res.json(data.pacientes);
+    res.json(data.libros);
 });
 
-// Obtener un paciente por ID (Ruta separada correctamente)[cite: 2]
-app.get("/pacientes/:id", (req, res) => {
+app.get("/libros/:id", (req, res) => {
     const data = readData();
-    const id = parseInt(req.params.id); // Corregido: 'parseInt'
-    const paciente = data.pacientes.find((p) => p.id === id); // Corregido: 'data.pacientes'
-    res.json(paciente);
+    const id = parseInt(req.params.id);
+    const libro = data.libros.find((l) => l.id === id);
+
+    if (!libro) {
+        return res.status(404).json({ error: "Libro no encontrado" });
+    }
+
+    res.json(libro);
 });
 
-// Crear un nuevo paciente
-app.post("/pacientes", (req, res) => {
+app.post("/libros", (req, res) => {
     const data = readData();
     const body = req.body;
-    const newPaciente = {
-        id: data.pacientes.length + 1,
+
+    const nuevoId = data.libros.length > 0
+        ? Math.max(...data.libros.map((l) => l.id)) + 1
+        : 1;
+
+    const newLibro = {
+        id: nuevoId,
         ...body,
     };
-    data.pacientes.push(newPaciente);
+    data.libros.push(newLibro);
     writeData(data);
-    res.json(newPaciente);
+    res.status(201).json(newLibro);
 });
 
-// Actualizar un paciente por ID
-app.put("/pacientes/:id", (req, res) => {
+app.put("/libros/:id", (req, res) => {
     const data = readData();
     const id = parseInt(req.params.id);
     const body = req.body;
 
-    // Buscamos el índice del paciente en el arreglo
-    const index = data.pacientes.findIndex((p) => p.id === id);
+    const index = data.libros.findIndex((l) => l.id === id);
 
     if (index === -1) {
-        return res.status(404).json({ error: "Paciente no encontrado" });
+        return res.status(404).json({ error: "Libro no encontrado" });
     }
 
-    // Actualizamos manteniendo los datos anteriores y sobreescribiendo los nuevos
-    data.pacientes[index] = {
-        ...data.pacientes[index],
+    data.libros[index] = {
+        ...data.libros[index],
         ...body,
+        id, 
     };
 
     writeData(data);
-    res.json({ message: "Dato modificado con exito" });
+    res.json({ message: "Libro modificado con éxito" });
 });
 
-app.delete("/pacientes/:id", (req, res) => {
+app.delete("/libros/:id", (req, res) => {
     const data = readData();
     const id = parseInt(req.params.id);
-    const index = data.pacientes.findIndex((p) => p.id === id);
+    const index = data.libros.findIndex((l) => l.id === id);
 
-    // Validamos si el paciente no existe
     if (index === -1) {
-        return res.status(404).json({ error: "Paciente no encontrado" });
+        return res.status(404).json({ error: "Libro no encontrado" });
     }
 
-    // Si sí existe, lo borramos usando la variable 'index' correcta
-    data.pacientes.splice(index, 1);
+    data.libros.splice(index, 1);
 
     writeData(data);
-    res.json({ message: "Paciente borrado con éxito" });
+    res.json({ message: "Libro borrado con éxito" });
 });
 
 app.listen(3000, () => {
