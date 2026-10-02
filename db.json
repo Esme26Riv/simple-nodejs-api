@@ -1,0 +1,32 @@
+{
+    "pacientes": [
+        {
+            "id": 1,
+            "paciente": "Ana Gómez",
+            "imc": 55,
+            "peso": 68,
+            "altura": 1.62
+        },
+        {
+            "id": 2,
+            "paciente": "Santiago Ruiz",
+            "imc": 58,
+            "peso": 75,
+            "altura": 1.75
+        },
+        {
+            "id": 1,
+            "paciente": "Ana Gómez",
+            "imc": 55,
+            "peso": 68,
+            "altura": 1.62
+        },
+        {
+            "id": 2,
+            "paciente": "Santiago Ruiz",
+            "imc": 58,
+            "peso": 75,
+            "altura": 1.75
+        }
+    ]
+}
